@@ -1,0 +1,410 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NightFlow.xyz</title>
+    <link rel="stylesheet" href="css/all.css" crossorigin="anonymous">
+<script src="js/jquery-3.6.0.js" crossorigin="anonymous"></script>
+<style>
+    :root {
+        --main-color: rgba(145, 213, 115, 1);
+        --secondary-color: #343a40;
+        --bg-color: #111;
+    }
+
+    body {
+        margin: 0;
+        padding: 0;
+        color: white;
+    }
+
+    html {
+        background-color: var(--bg-color);
+    }
+
+    * {
+        font-family: 'Consolas', monospace;
+    }
+
+    .index_center {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+        color: white;
+    }
+
+    .index_center>.title {
+        color: var(--main-color);
+        font-size: 3em;
+        transition-property: all;
+        transition-duration: 3s;
+        margin-bottom: 1rem;
+    }
+
+    .index_center>.title:hover {
+        color: rgba(47, 196, 67, 1);
+        transform: scale(1.2);
+    }
+
+    .index_center>.links>a {
+        transition-property: all;
+        transition-duration: 1s;
+    }
+
+    .index_center>.links {
+        margin-bottom: 1rem;
+    }
+
+    .index_center>.links>a:hover {
+        color: var(--main-color);
+        transform: scale(1.2);
+    }
+
+    .index_center>.img>svg {
+        -webkit-animation: fadein 5s ease-in alternate infinite;
+        -moz-animation: fadein 5s ease-in alternate infinite;
+        animation: fadein 5s ease-in alternate infinite;
+    }
+
+    a {
+        color: inherit;
+        text-decoration: none;
+    }
+
+    .app {
+        display: flex;
+        min-height: 100vh;
+        overflow: hidden;
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .app>.header {
+        transform: scale(3);
+        color: var(--main-color);
+        padding: 1rem 0;
+        -webkit-animation: fadein03 5s ease-in alternate infinite;
+        -moz-animation: fadein03 5s ease-in alternate infinite;
+        animation: fadein03 5s ease-in alternate infinite;
+    }
+
+    .app>.body {
+        flex: 1 1 0%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .app>.body-panel {
+        margin: 1rem 0;
+        flex: 1 1 0%;
+        display: flex;
+    }
+
+    .body-panel>.center-side {
+        width: 100%;
+    }
+
+    .app>.footer {
+        padding: .5rem 0;
+    }
+
+    .panel-container {
+        background: rgba(52, 58, 64, 0.05);
+        backdrop-filter: blur(3px);
+        -webkit-backdrop-filter: blur(3px);
+        border-radius: .3rem;
+        border: 1px solid rgba(255, 255, 255, 0.01);
+        min-width: 500px;
+    }
+
+    .panel-container>.title {
+        background-color: var(--secondary-color);
+        padding: 1rem;
+        border-top-right-radius: .3rem;
+        border-top-left-radius: .3rem;
+        border-bottom: 1px solid rgba(0, 0, 0, .125)
+    }
+
+    .panel-container>.body {
+        padding: 1rem;
+    }
+
+    .auth-container {
+        background: rgba(52, 58, 64, 0.05);
+        backdrop-filter: blur(3px);
+        -webkit-backdrop-filter: blur(3px);
+        border-radius: .3rem;
+        border: 1px solid rgba(255, 255, 255, 0.01);
+        min-width: 500px;
+    }
+
+    .auth-container>.title {
+        background-color: var(--secondary-color);
+        padding: 1rem;
+        border-top-right-radius: .3rem;
+        border-top-left-radius: .3rem;
+        border-bottom: 1px solid rgba(0, 0, 0, .125)
+    }
+
+    .auth-container>.body {
+        padding: 1rem;
+    }
+
+    .auth-container>.body>.data {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .auth-container>.body>.data>div {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .auth-container>.body>.data>div:last-child {
+        margin-left: 1rem;
+    }
+
+    .auth-container>.body>.data {
+        text-align: start;
+    }
+
+    .auth-container>.body>.data>.input>input {
+        background: rgba(52, 58, 64, 0.05);
+        backdrop-filter: blur(3px);
+        -webkit-backdrop-filter: blur(3px);
+        border-radius: .3rem;
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        outline: none;
+        margin: .4rem 0;
+        font-family: 'Consolas', monospace;
+        color: white;
+        width: 100%;
+        padding: .5rem;
+    }
+
+    .auth-container>.body>.data>.name>div {
+        margin: .9rem 0;
+    }
+
+    .auth-container>.body>.buttons {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: 1rem;
+    }
+
+    .auth-container>.body>.buttons>div>button {
+        border: none;
+        background-color: var(--secondary-color);
+        color: white;
+        border-radius: .3rem;
+        padding: .5rem .7rem;
+        outline: none;
+        transition-property: all;
+        transition-duration: 1s;
+        border: 1px double transparent;
+    }
+
+    .auth-container>.body>.buttons>div>button:hover {
+        color: var(--main-color);
+        border-color: var(--main-color);
+    }
+
+    .auth-container>.body>.buttons>a>button {
+        transition-property: all;
+        transition-duration: 1s;
+        border: none;
+        background: none;
+        outline: none;
+        color: white;
+        background-image: -webkit-linear-gradient(90deg, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 1) 6%, rgba(255, 255, 255, 1) 49%, rgba(255, 255, 255, 1) 100%);
+        background-repeat: no-repeat;
+        background-size: 0% 1px;
+        background-position: center bottom;
+        padding-bottom: .2rem;
+    }
+
+    .auth-container>.body>.buttons>a>button:hover {
+        color: var(--main-color);
+        background-size: 90% 1px;
+    }
+
+    .app>.footer>a {
+        transition-property: all;
+        transition-duration: 1s;
+    }
+
+    .app>.footer>a:hover {
+        color: var(--main-color);
+    }
+
+    .app>.body-panel>.left-side {
+        text-align: start;
+        padding: 0 1rem;
+        align-self: center;
+    }
+
+    .app>.body-panel>.left-side,
+    .app>.body-panel>.right-side {
+        width: 33.3%;
+    }
+
+    .panel-container>.body>.info_subs>h3 {
+        margin: 0;
+        padding: 0;
+        margin-bottom: 1rem;
+    }
+
+    .panel-container>.body>.info_subs>div {
+        text-align: start;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    th {
+        background: var(--secondary-color);
+        opacity: .7;
+        font-size: 0.9em;
+        text-align: start;
+        margin: 0;
+        padding: 0;
+    }
+
+    td {
+        background: var(--bg-color);
+        opacity: .7;
+        text-align: start;
+    }
+
+    .panel-container>.body>.content-pay>.info,
+    .panel-container>.body>.content-pay>.pay,
+    .panel-container>.body>.content-pay>.pay>div:first-child>div:first-child {
+        width: 100%;
+    }
+
+    .panel-container>.body>.content-pay>.info,
+    .panel-container>.body>.content-pay>.pay,
+    .panel-container>.body>.content-pay>.pay>div:first-child>div:first-child {
+        margin-right: 1rem;
+    }
+
+    .panel-container>.body>.content-pay {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .panel-container>.body>.content-pay>.pay>div:first-child {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .panel-container>.body>.content-pay>.pay>div:first-child select {
+        width: 100%;
+    }
+
+    .panel-container>.body>.content-pay>.pay>div:last-child {
+        font-size: 12px;
+        color: #979797;
+    }
+
+    .swal2-container.swal2-center>.swal2-popup {
+        background: rgba(52, 58, 64, 0.55);
+        backdrop-filter: blur(3px);
+        -webkit-backdrop-filter: blur(3px);
+        border-radius: 0.3rem;
+        border: 1px solid rgba(255, 255, 255, 0.01);
+        color: white;
+    }
+
+    .swal2-success-circular-line-left,
+    .swal2-success-circular-line-right,
+    .swal2-success-fix {
+        display: none;
+    }
+
+    .hwid_appilicaton_status_2 {
+        color: crimson;
+        font-weight: bold;
+    }
+
+    .hwid_appilicaton_status_1 {
+        color: green;
+        font-weight: bold;
+    }
+
+    .hwid_appilicaton_status_0 {
+        color: orange;
+        font-weight: bold;
+    }
+    .active-tab {
+        color: var(--main-color);
+        font-weight: bold;
+    }
+    @keyframes fadein {
+        from {
+            opacity: 0;
+        }
+
+        to {
+            opacity: 1;
+        }
+    }
+
+    @keyframes fadein03 {
+        from {
+            opacity: 0.3;
+        }
+
+        to {
+            opacity: 1;
+        }
+    }
+</style>    <script src="https://unpkg.com/scrollreveal@4"></script>
+</head>
+
+<body>
+    <div class="index_center">
+        <div class="title" style="opacity: 0;">
+            <a href="#">NightFlow.xyz</a>
+        </div>
+        <div class="links">
+            <a href="/panel">[panel]</a>
+            <a href="/login">[login]</a>
+            <a href="/register">[register]</a>
+            <a href="/tos">[tos]</a>
+            <a href="https://docs.nightflow.xyz/">[lua api]</a>
+            <a href="/news">[news]</a>
+        </div>
+        <div class="img">
+            <svg width="166" height="208" viewBox="0 0 166 208" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M76.709 0.120385C76.0597 0.201687 73.7462 0.486245 71.6357 0.730152C58.6479 2.23424 44.0773 8.29126 32.4694 17.0719C28.289 20.2427 20.1311 28.4136 16.9653 32.6006C8.56381 43.8203 3.16577 56.3815 0.730562 70.4062C-0.243521 76.0973 -0.243521 90.3252 0.730562 96.0164C3.3687 111.301 9.57848 125.041 18.954 136.261C25.0826 143.619 32.9971 150.448 40.2215 154.635C46.6342 158.335 46.2689 157.887 51.0582 166.993C53.4934 171.546 55.7663 175.53 56.1315 175.814C56.4968 176.099 57.9579 176.302 59.6626 176.302C64.4924 176.302 66.2782 174.432 66.3188 169.392C66.3594 166.424 67.4147 164.717 69.5658 164.066C73.5839 162.847 76.0597 165.53 76.1002 171.14C76.1002 174.92 77.9672 176.302 83 176.302C88.0328 176.302 89.8998 174.92 89.8998 171.14C89.9403 165.53 92.4161 162.847 96.4342 164.066C98.5853 164.717 99.6406 166.424 99.6812 169.392C99.7218 174.432 101.508 176.302 106.337 176.302C108.042 176.302 109.503 176.099 109.868 175.774C110.234 175.53 112.507 171.546 114.901 166.993C119.69 157.928 119.285 158.375 125.778 154.635C135.722 148.863 146.153 138.741 152.931 128.334C158.938 119.025 163.24 107.765 165.269 96.0164C166.244 90.3252 166.244 76.0973 165.269 70.4062C162.834 56.3815 157.436 43.8203 149.035 32.6006C145.869 28.4136 137.711 20.2427 133.531 17.0719C122.288 8.61647 109.138 2.96596 95.7848 0.892756C91.8479 0.28299 79.1848 -0.245475 76.709 0.120385ZM51.3423 84.3088C59.2161 86.4633 65.6288 93.4147 67.3741 101.708C68.1046 105.285 68.1046 107.48 67.3741 110.976C65.7506 118.7 59.7844 125.407 52.2352 128.009C50.0435 128.74 48.6636 128.944 45.0513 128.944C41.4391 128.944 40.0592 128.74 37.8675 128.009C30.2777 125.366 24.3521 118.74 22.7286 111.057C21.5922 105.691 22.1198 101.464 24.555 96.4229C29.5066 86.2194 40.3839 81.3006 51.3423 84.3088ZM127.24 84.3088C136.696 86.8699 143.921 96.4635 143.88 106.342C143.84 115.813 137.265 124.838 128.133 128.009C125.941 128.74 124.561 128.944 120.949 128.944C117.336 128.944 115.956 128.74 113.765 128.009C106.216 125.407 100.249 118.7 98.6259 110.976C97.8954 107.48 97.8954 105.285 98.6259 101.708C101.386 88.5772 114.292 80.7315 127.24 84.3088ZM77.4802 133.863C78.0078 134.35 78.1296 135.529 78.1296 140.082C78.1296 147.318 78.1702 147.237 73.2592 147.237C70.0528 147.237 69.444 147.115 68.957 146.464C68.6323 146.017 68.3888 145.285 68.3888 144.879C68.3888 144.188 73.1374 135.041 74.1927 133.7C74.7203 133.009 76.709 133.09 77.4802 133.863ZM94.6484 138.7C97.6924 144.188 98.0171 145.123 97.043 146.464C96.556 147.115 95.9472 147.237 92.7408 147.237C87.8298 147.237 87.8704 147.318 87.8704 140.082C87.8704 133.781 88.1545 133.05 90.468 133.293C91.645 133.415 91.9697 133.822 94.6484 138.7Z" fill="#91D573"/>
+                <path d="M31.2112 160.448C30.7648 160.611 29.8719 161.343 29.3037 162.074L28.2078 163.375V174.188V185.002L30.3995 187.034C31.6171 188.172 36.8122 193.132 41.9667 198.051C47.1619 202.969 51.8699 207.197 52.4787 207.482C54.0616 208.173 111.938 208.173 113.521 207.482C114.13 207.197 118.838 202.969 124.033 198.051C129.188 193.132 134.383 188.172 135.6 187.034L137.792 185.002V174.148V163.335L136.534 161.912C134.423 159.473 132.313 159.513 128.335 162.074C126.793 163.05 126.144 163.985 122.572 170.855C118.27 178.985 116.931 180.733 113.562 182.563C110.843 184.067 110.193 185.286 110.193 188.863C110.193 192.4 109.463 194.311 107.677 195.408C105.688 196.669 103.496 196.303 101.792 194.433C100.574 193.132 100.452 192.725 100.452 190.449C100.452 185.855 98.423 183.619 94.2425 183.619C89.9809 183.619 87.8704 185.693 87.8704 189.839C87.8704 192.644 87.0993 194.351 85.3134 195.408C83.6494 196.425 82.3506 196.425 80.6865 195.408C78.9007 194.351 78.1296 192.644 78.1296 189.839C78.1296 185.693 76.0191 183.619 71.7575 183.619C67.577 183.619 65.5477 185.855 65.5477 190.449C65.5477 192.725 65.4259 193.132 64.2083 194.433C62.5037 196.303 60.312 196.669 58.3232 195.408C56.5374 194.311 55.8068 192.4 55.8068 188.904C55.8068 185.246 55.198 184.067 52.5193 182.644C49.1912 180.815 47.6895 178.863 43.8337 171.546C41.8856 167.806 39.9374 164.229 39.5315 163.66C38.6386 162.4 34.377 160.042 33.0377 160.083C32.51 160.083 31.6983 160.245 31.2112 160.448Z" fill="#91D573"/>
+            </svg>
+
+        </div>
+    </div>
+
+    <script>
+            const linksRev = ScrollReveal({
+      origin: 'top',
+      distance: '20px',
+      duration: 2500,
+      delay: 400,
+    });
+    linksRev.reveal(".links");
+    </script>
+    <script defer="defer">
+        $(".title").animate({opacity: 1}, 500);
+    </script>
+
+
+</body></html>
